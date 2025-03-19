@@ -1,2 +1,6 @@
 # installations_dash
-Internal KPIs for OPS
+Requires
+streamlit
+pandas
+plotly.express
+datetime
