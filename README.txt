@@ -2,5 +2,5 @@
 Requires
 streamlit
 pandas
-plotly.express
+plotly
 datetime
