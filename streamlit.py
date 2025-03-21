@@ -14,7 +14,7 @@ def main():
         try:
             # Read the uploaded CSV file
             df = pd.read_csv(uploaded_file)
-            st.write("Data Preview:", df.head())  # Display first few rows
+            
 
             # Process data
             df = process_data(df)
@@ -22,7 +22,7 @@ def main():
                 return
 
             # Load and display image
-            image_path = 'Michelin_C_S_BlueBG_RGB_0621-01.png'
+            image_path = '/Users/massaerdiouf/Desktop/Michelin_C_S_BlueBG_RGB_0621-01.png'
             try:
                 image = Image.open(image_path)
                 st.image(image, width=700)
