@@ -62,8 +62,6 @@ def main():
     else:
         st.warning("Please upload a CSV file.")
 
-# Streamlit file uploader
-uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
 
 def process_data(df):
     """
