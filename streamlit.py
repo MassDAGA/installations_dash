@@ -17,6 +17,52 @@ if uploaded_file is not None:
 else:
     st.warning("Please upload a CSV file.")
 
+def main():
+    # Configuration
+    st.set_page_config(layout="wide")
+    
+    if uploaded_file is not None:
+        # Process data
+        df = process_data(df)
+        if df is None:
+            return
+
+        # Load and display image
+        image_path = 'Michelin_C_S_BlueBG_RGB_0621-01.png'
+        try:
+            image = Image.open(image_path)
+            st.image(image, width=700)
+            st.sidebar.image(image)
+        except Exception as e:
+            st.error(f"Error loading image: {e}")
+
+        # Title
+        st.title("Installations Map by Installer Company | 2023 to Current")
+        st.sidebar.title("Filters")
+
+        # Filters
+        selected_installers = st.sidebar.multiselect("Select Installer Company", df['Installer Company'].unique())
+        filtered_df = df[df['Installer Company'].isin(selected_installers)] if selected_installers else df
+
+        selected_state = st.sidebar.multiselect("Select Installing State", df['Installing State'].unique())
+        filtered_df = filtered_df[filtered_df['Installing State'].isin(selected_state)] if selected_state else filtered_df
+
+        # Plot Map
+        plot_map(filtered_df)
+
+        # Plot Bar Charts
+        plot_bar_chart(filtered_df, "Number of Installations by Installer Company", 'Installer Company', 'Sum of Devices')
+        plot_bar_chart(filtered_df, "Total Invoice Cost by Installer Company", 'Date Invoice Approved', 'Total Invoice Cost')
+
+        # Group Data and Plot Average Miles
+        state_grouped = df.groupby(['Installing State', 'Installer Company'])['Total Miles'].mean().reset_index()
+        plot_bar_chart(state_grouped, "Average Miles Traveled by Installer Company and State", 'Installing State', 'Total Miles')
+        
+        st.title("Average Miles Traveled by State")
+        state_chart = px.bar(state_grouped, x='Installing State', y='Total Miles', color='Installer Company', height=500)
+        state_chart.add_hline(y=state_grouped['Total Miles'].mean(), line_dash='dot', annotation_text='Average Miles Traveled')
+        st.plotly_chart(state_chart)
+
 def process_data(df):
     """
     Process the dataframe to extract latitude and longitude from GeoData.
@@ -64,51 +110,6 @@ def plot_bar_chart(df, title, x, y):
     bar_chart = px.bar(df, x=x, y=y, color='Installer Company', height=500)
     st.plotly_chart(bar_chart)
 
-def main():
-    # Configuration
-    st.set_page_config(layout="wide")
-    
-    if uploaded_file is not None:
-        # Process data
-        df = process_data(df)
-        if df is None:
-            return
-
-        # Load and display image
-        image_path = 'Michelin_C_S_BlueBG_RGB_0621-01.png'
-        try:
-            image = Image.open(image_path)
-            st.image(image, width=700)
-            st.sidebar.image(image)
-        except Exception as e:
-            st.error(f"Error loading image: {e}")
-
-        # Title
-        st.title("Installations Map by Installer Company | 2023 to Current")
-        st.sidebar.title("Filters")
-
-        # Filters
-        selected_installers = st.sidebar.multiselect("Select Installer Company", df['Installer Company'].unique())
-        filtered_df = df[df['Installer Company'].isin(selected_installers)] if selected_installers else df
-
-        selected_state = st.sidebar.multiselect("Select Installing State", df['Installing State'].unique())
-        filtered_df = filtered_df[filtered_df['Installing State'].isin(selected_state)] if selected_state else filtered_df
-
-        # Plot Map
-        plot_map(filtered_df)
-
-        # Plot Bar Charts
-        plot_bar_chart(filtered_df, "Number of Installations by Installer Company", 'Installer Company', 'Sum of Devices')
-        plot_bar_chart(filtered_df, "Total Invoice Cost by Installer Company", 'Date Invoice Approved', 'Total Invoice Cost')
-
-        # Group Data and Plot Average Miles
-        state_grouped = df.groupby(['Installing State', 'Installer Company'])['Total Miles'].mean().reset_index()
-        plot_bar_chart(state_grouped, "Average Miles Traveled by Installer Company and State", 'Installing State', 'Total Miles')
-        
-        st.title("Average Miles Traveled by State")
-        state_chart = px.bar(state_grouped, x='Installing State', y='Total Miles', color='Installer Company', height=500)
-        state_chart.add_hline(y=state_grouped['Total Miles'].mean(), line_dash='dot', annotation_text='Average Miles Traveled')
-        st.plotly_chart(state_chart)
 
 if __name__ == "__main__":
     main()
