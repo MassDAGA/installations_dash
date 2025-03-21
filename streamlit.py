@@ -4,14 +4,16 @@ import pandas as pd
 import datetime as dt
 from PIL import Image
 
-def load_data(file_path):
-    try:
-        df = pd.read_csv(file_path)
-        df.info()
-        return df
-    except Exception as e:
-        st.error(f"Error loading data: {e}")
-        return None
+
+# Streamlit file uploader
+uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
+
+if uploaded_file is not None:
+    # Read the uploaded CSV file
+    df = pd.read_csv(uploaded_file)
+    st.write("Data Preview:", df.head())  # Display first few rows
+else:
+    st.warning("Please upload a CSV file.")
 
 def process_data(df):
     try:
@@ -44,11 +46,7 @@ def main():
     # Configuration
     st.set_page_config(layout="wide")
     
-    # Load data
-    data_file_path = 'invoices_with_geodata.csv'
-    df = load_data(data_file_path)
-    if df is None:
-        return
+
     
     # Process data
     df = process_data(df)
