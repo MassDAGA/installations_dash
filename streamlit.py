@@ -4,10 +4,10 @@ import pandas as pd
 import datetime as dt
 from PIL import Image
 
+# Configuration
+st.set_page_config(layout="wide")
+
 def main():
-    # Configuration
-    st.set_page_config(layout="wide")
-    
     if uploaded_file is not None:
         # Process data
         df = process_data(df)
