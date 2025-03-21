@@ -4,19 +4,6 @@ import pandas as pd
 import datetime as dt
 from PIL import Image
 
-# Streamlit file uploader
-uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
-
-if uploaded_file is not None:
-    try:
-        # Read the uploaded CSV file
-        df = pd.read_csv(uploaded_file)
-        st.write("Data Preview:", df.head())  # Display first few rows
-    except Exception as e:
-        st.error(f"Error reading the uploaded file: {e}")
-else:
-    st.warning("Please upload a CSV file.")
-
 def main():
     # Configuration
     st.set_page_config(layout="wide")
@@ -62,6 +49,20 @@ def main():
         state_chart = px.bar(state_grouped, x='Installing State', y='Total Miles', color='Installer Company', height=500)
         state_chart.add_hline(y=state_grouped['Total Miles'].mean(), line_dash='dot', annotation_text='Average Miles Traveled')
         st.plotly_chart(state_chart)
+
+# Streamlit file uploader
+uploaded_file = st.file_uploader("Upload your CSV file", type=["csv"])
+
+if uploaded_file is not None:
+    try:
+        # Read the uploaded CSV file
+        df = pd.read_csv(uploaded_file)
+        st.write("Data Preview:", df.head())  # Display first few rows
+    except Exception as e:
+        st.error(f"Error reading the uploaded file: {e}")
+else:
+    st.warning("Please upload a CSV file.")
+
 
 def process_data(df):
     """
