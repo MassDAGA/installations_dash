@@ -112,10 +112,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-```
 
-Key changes:
-- Added error handling for CSV file upload.
-- Added docstrings to functions.
-- Used `str.extract` for extracting latitude and longitude, which can be more efficient and readable.
-- Ensured consistent formatting and adherence to PEP 8 guidelines.
