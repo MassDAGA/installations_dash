@@ -27,7 +27,7 @@ st.title("Welcome to the App 🎉")
 
 # load CSV string
 csv_data = st.secrets["data"]["csv"]
-read CSV from string
+# read CSV from string
 #df = pd.read_csv('/Users/massaerdiouf/Downloads/invoices_with_geodata.csv')
 installers = pd.read_csv(io.StringIO(csv_data))
 
