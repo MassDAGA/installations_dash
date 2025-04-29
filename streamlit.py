@@ -47,7 +47,7 @@ st.sidebar.header("Filters")
 fig_installers = px.scatter_mapbox(
     installers, lat='Latitude', lon='Longitude', hover_name='Installation Partner',
     hover_data=['Name'],
-    zoom=5, color='Installation Partner', height=1000, width=1000
+    zoom=5, color='Installation Partner', height=1000, width=2000
 )
 fig_installers.update_layout(mapbox_style='carto-darkmatter')
 # Display the map
