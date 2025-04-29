@@ -41,10 +41,11 @@ fig_installers = px.scatter_mapbox(
     lon='Longitude',
     hover_name='Installation Partner',
     hover_data=['Name'],
+    zoom=5,
     color='Installation Partner',
     height=1000,
     width=2000,
 )
 fig_installers.update_layout(mapbox_style='carto-darkmatter')
-st.plotly_chart(fig_installers, use_container_width=True)
+st.plotly_chart(fig_installers)
 
