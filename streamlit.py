@@ -41,7 +41,6 @@ fig_installers = px.scatter_mapbox(
     lon='Longitude',
     hover_name='Installation Partner',
     hover_data=['Name'],
-    zoom=10,
     color='Installation Partner',
     height=1000,
     width=2000,
