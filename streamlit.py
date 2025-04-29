@@ -49,10 +49,8 @@ fig_installers = px.scatter_mapbox(
     hover_data=['Name'],
     zoom=5, color='Installation Partner', height=1000, width=2000
 )
-fig_installers.update_layout(mapbox_style='carto-darkmatter')
+fig_installers.update_layout(mapbox_style='carto-darkmatter', use_container_width=True)
 
-# increase map width
-st.plotly_chart(fig, use_container_width=True)
 
 # Display the map
 st.plotly_chart(fig_installers)
