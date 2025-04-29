@@ -31,6 +31,8 @@ csv_data = st.secrets["data"]["csv"]
 #df = pd.read_csv('/Users/massaerdiouf/Downloads/invoices_with_geodata.csv')
 installers = pd.read_csv(io.StringIO(csv_data))
 
+st.dataframe(installers)
+
 
 
 # unpack lat and long from geodata
