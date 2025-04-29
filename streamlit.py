@@ -46,6 +46,13 @@ fig_installers = px.scatter_mapbox(
     height=1000,
     width=2000,
 )
-fig_installers.update_layout(mapbox_style='carto-darkmatter')
+fig_installers.update_layout(
+    mapbox=dict(
+        style="carto-darkmatter",
+        center=dict(lat=your_lat, lon=your_lon),
+        zoom=5
+    ),
+    margin={"r":0,"t":0,"l":0,"b":0}
+)
 st.plotly_chart(fig_installers)
 
