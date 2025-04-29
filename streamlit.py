@@ -49,7 +49,7 @@ fig_installers = px.scatter_mapbox(
 fig_installers.update_layout(
     mapbox=dict(
         style="carto-darkmatter",
-        center=dict(lat='Latitude', lon='Longitude'),
+        center=dict(lat=installers['Latitude'], lon=installers['Longitude']),
         zoom=5
     ),
     margin={"r":0,"t":0,"l":0,"b":0}
