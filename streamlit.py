@@ -2,7 +2,7 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 import io
-
+st.set_page_config(layout="wide")
 PASSWORD = st.secrets["password"]
 
 # Check authentication state
@@ -43,9 +43,9 @@ fig_installers = px.scatter_mapbox(
     hover_data=['Name'],
     zoom=5,
     color='Installation Partner',
-    height=1000,
+    height=600,
     width=2000,
 )
 fig_installers.update_layout(mapbox_style='carto-darkmatter')
-st.plotly_chart(fig_installers, use_container_width=False)
+st.plotly_chart(fig_installers, use_container_width=True)
 
