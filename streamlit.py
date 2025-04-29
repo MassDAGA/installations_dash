@@ -23,7 +23,7 @@ if not st.session_state.authenticated:
             st.error("Incorrect password.")
     st.stop()
 
-st.title("Welcome to the App 🎉")
+st.title("MCF Installater Network")
 
 
 # load CSV string
@@ -54,9 +54,9 @@ st.dataframe(installers)
 
 # add a .png image to the page as a header
 
-#image = Image.open('/Users/massaerdiouf/Desktop/Michelin_C_S_BlueBG_RGB_0621-01.png')
+image = Image.open('/Users/massaerdiouf/Desktop/Michelin_C_S_BlueBG_RGB_0621-01.png')
 # insert an image to the page
-#st.image(image, width=800)
+st.image(image, width=800)
 
 # insert image to the sidebar
 st.sidebar.image(image)
