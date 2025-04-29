@@ -25,23 +25,25 @@ if not st.session_state.authenticated:
 st.title("Welcome to the App 🎉")
 
 
-# load data
-df = pd.read_csv('/Users/massaerdiouf/Downloads/invoices_with_geodata.csv')
-installers = pd.read_csv('/Users/massaerdiouf/Downloads/Installers Geo/Installers Locations with Geodata.csv')
+# load CSV string
+csv_data = st.secrets["data"]["csv"]
+read CSV from string
+#df = pd.read_csv('/Users/massaerdiouf/Downloads/invoices_with_geodata.csv')
+installers = pd.read_csv(io.StringIO(csv_data))
 
 
 
 # unpack lat and long from geodata
-df['lat'] = df['GeoData'].apply(lambda x: x.split(',')[0])
-df['long'] = df['GeoData'].apply(lambda x: x.split(',')[1])
+#df['lat'] = df['GeoData'].apply(lambda x: x.split(',')[0])
+#df['long'] = df['GeoData'].apply(lambda x: x.split(',')[1])
 
 # remove opening and closing parentheses from lat and long
-df['lat'] = df['lat'].str.replace('(', '')
-df['long'] = df['long'].str.replace(')', '')
+#df['lat'] = df['lat'].str.replace('(', '')
+#df['long'] = df['long'].str.replace(')', '')
 
 # convert lat and long to float
-df['lat'] = df['lat'].astype(float)
-df['long'] = df['long'].astype(float)
+#df['lat'] = df['lat'].astype(float)
+#df['long'] = df['long'].astype(float)
 
 
 
@@ -49,29 +51,29 @@ df['long'] = df['long'].astype(float)
 
 # add a .png image to the page as a header
 
-image = Image.open('/Users/massaerdiouf/Desktop/Michelin_C_S_BlueBG_RGB_0621-01.png')
+#image = Image.open('/Users/massaerdiouf/Desktop/Michelin_C_S_BlueBG_RGB_0621-01.png')
 # insert an image to the page
-st.image(image, width=800)
+#st.image(image, width=800)
 
 # insert image to the sidebar
 st.sidebar.image(image)
 
 
 # Title
-st.title("Installations Map by Installer Company | 2023 to Current")
+st.title("Installers Location Map")
 st.sidebar.title("Filters")
 
 # FILTERS
 
 # Convert date column to datetime format
-df['Date Invoice Approved'] = pd.to_datetime(df['Date Invoice Approved'])
+#df['Date Invoice Approved'] = pd.to_datetime(df['Date Invoice Approved'])
 
 
 # Sidebar filters
 st.sidebar.header("Filters")
 
 # Date Range Filter
-min_date = df['Date Invoice Approved'].min().date()
+'''min_date = df['Date Invoice Approved'].min().date()
 max_date = df['Date Invoice Approved'].max().date()
 start_date, end_date = st.sidebar.date_input(
     "Filter by Date Invoice Approved", 
@@ -79,13 +81,14 @@ start_date, end_date = st.sidebar.date_input(
     min_value=min_date, 
     max_value=max_date
 )
+'''
 
 # Filter DataFrame by Date Range
-filtered_df = df[(df['Date Invoice Approved'] >= pd.Timestamp(start_date)) & 
-                 (df['Date Invoice Approved'] <= pd.Timestamp(end_date))]
+'''filtered_df = df[(df['Date Invoice Approved'] >= pd.Timestamp(start_date)) & 
+                 (df['Date Invoice Approved'] <= pd.Timestamp(end_date))]'''
 
 # Filter by Installer Company
-selected_installers = st.sidebar.multiselect("Select Installer Company", df['Installer Company'].unique())
+'''selected_installers = st.sidebar.multiselect("Select Installer Company", df['Installer Company'].unique())
 filtered_df = filtered_df[filtered_df['Installer Company'].isin(selected_installers)] if selected_installers else filtered_df
 
 # Filter by Installing State
@@ -99,17 +102,18 @@ filtered_df = filtered_df[filtered_df['Installing Country'].isin(selected_countr
 # Display Results
 st.write(f"Showing invoices approved between {start_date} and {end_date}:")
 st.dataframe(filtered_df)
+'''
 
 
 
 # Plotly Map
-fig = px.scatter_mapbox(
+'''fig = px.scatter_mapbox(
     filtered_df, lat='lat', lon='long', hover_name='Account Name',
     hover_data=['Total Invoice Cost', 'Date Invoice Approved', 'Total Miles', 'Installing City', 'Service Order'],
     zoom=5, color='Installer Company', height=1000, size='Sum of Devices', width=1000
 )
 fig.update_layout(mapbox_style='carto-darkmatter')
-
+'''
 
 # create interactive map with plotly from df_12_volts
 fig_installers = px.scatter_mapbox(
@@ -124,7 +128,7 @@ st.plotly_chart(fig_installers)
 
 
 # insert an interactive bart chart showing the number of installations by installer company
-st.title("Number of Installations by Installer Company")
+'''st.title("Number of Installations by Installer Company")
 bar_chart = px.bar(filtered_df, x='Installer Company', y='Sum of Devices', color='Installer Company', height=500)
 st.plotly_chart(bar_chart)
 
@@ -146,7 +150,7 @@ st.title("Average Miles Traveled by State")
 state_chart = px.bar(state_grouped, x='Installing State', y='Total Miles', color='Installer Company', height=500)
 state_chart.add_hline(y=state_grouped['Total Miles'].mean(), line_dash='dot', annotation_text='Average Miles Traveled')
 st.plotly_chart(state_chart)
-
+'''
 
 
 
