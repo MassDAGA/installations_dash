@@ -42,8 +42,8 @@ st.title('Installers Location Map')
 
 fig_installers = px.scatter_mapbox(
    installers,
-   lat=“Latitude”,
-   lon=“Longitude”,
+   lat='Latitude',
+   lon='Longitude',
    hover_name='Installation Partner',
    hover_data=['Name'],
    zoom=5,
